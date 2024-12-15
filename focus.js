@@ -9,7 +9,7 @@ document
 
 // masala - 2
 document
-  .getElementById("inputValue2")
+  .getElementById("inputValue2-2")
   .addEventListener("keypress", function (event2) {
     if (event2.key === "Enter") {
       m2();

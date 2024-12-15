@@ -1,117 +1,125 @@
+
+
+
 function m1() {
   const input = document.getElementById("inputValue").value;
   const array = input.trim().split(" ").map(Number);
   for (let i = 0; i < array.length; i++) {
-    let count = 0;
-    for (let c = 0; c < array.length; c++) {
-      if (array[i] === array[c]) {
-        count++;
-      }
-    }
-    if (count == 1) {
+    if (!array.slice(i + 1).includes(array[i]) && !array.slice(0, i).includes(array[i])) {
       return (document.getElementById(
         "output"
-      ).innerHTML = `Takrorlanmas element:  ${array[i]} <br> index = ${i}`);
+      ).innerHTML = `Takrorlanmas element: ${array[i]} <br> index = ${i}`);
     }
   }
   return (document.getElementById(
     "output"
   ).innerHTML = `Takrorlanmas element yoq.`);
 }
-function m2() {
+
+
+
+
+
+function m2(){
   const input = document.getElementById("inputValue2").value;
+  const input2 = document.getElementById("inputValue2-2").value;
   const array = input.trim().split(" ").map(Number);
-  const result = array.map((num) => num * -1).join(" ");
-  document.getElementById("output2").innerHTML = `O'zgargan arr: ${result}`;
+  const array2 = input2.trim().split(" ").map(Number);
+  const concatArr = array.concat(array2);
+  const filter = concatArr.filter((item) => item % 2 === 0);
+  const result = filter.reduce((a, b) => a + b, 0);
+  document.getElementById("output2").innerHTML = `Javob: ${result}`;
 }
+
 function m3() {
   const input = document.getElementById("inputValue3").value;
   const array = input.trim().split(" ").map(Number);
-  const result = array.map((num) => num ** 2).join(" ");
-  document.getElementById(
-    "output3"
-  ).innerHTML = `Kvadratdga oshirilgan arr:<br> ${result}`;
+  let aLot = array[0];
+  let max = 0;
+  for (let i = 0; i < array.length; i++) {
+    const el = array[i];
+    const count = array.lastIndexOf(el) - array.indexOf(el) + 1;
+    if (count > max) {
+      aLot = el;
+      max = count;
+    }
+    i = array.lastIndexOf(el);
+  }
+  document.getElementById("output3").innerHTML = `Javob: ${aLot}`;
 }
-
-
-
 
 function m4() {
   const input = document.getElementById("inputValue4").value;
   const array = input.trim().split(" ").map(Number);
-  for (let i = 0; i < array.length; i++) {
-    let count = 0;
-    for (let c = 0; c < array.length; c++) {
-      if (array[i] === array[c]) {
-        count++;
-      }
-    }
-    if (count != 1) {
-      array.splice(i, 1);
-      i--;
-    }
-  }
+  const input2 = document.getElementById("inputValue4-4").value;
+  const array2 = input2.trim().split(" ").map(Number);
+  const filterArr = [...new Set(array.filter((item) => array2.includes(item)))];
   return (document.getElementById(
     "output4"
-  ).innerHTML = `Takrorlangan elementlar o'chirildi: <br>  [ ${array} ]`);
+  ).innerHTML = `Takrorlangan elementlar o'chirildi: <br>  [ ${filterArr} ]`);
 }
 
-
-
-
-
-
-
-
-
 function m5() {
-  const n = +document.getElementById("n").value;
   const input = document.getElementById("inputValue5").value;
   const array = input.trim().split(" ").map(Number);
-  let count = 0;
-  for (let i = 0; i < array.length; i++) {
-    if (array[i] % n !== 0) {
-      count++;
+  let musbat = 0;
+  let manfiy = 0;
+  let nol = 0;
+  array.forEach((num) => {
+    if (num > 0) {
+      musbat++;
+    } else if (num < 0) {
+      manfiy++;
+    } else {
+      nol++;
     }
-  }
-  return (document.getElementById(
-    "output5"
-  ).innerHTML = `Arrey da ${n} ga bo'linmiydigan element  ${count} ta.`);
+  });
+  const len = array.length;
+  const musbatP = ((musbat / len) * 100).toFixed();
+  const manfiyP = ((manfiy / len) * 100).toFixed();
+  const nolP = ((nol / len) * 100).toFixed();
+  document.getElementById("output5").innerHTML = `
+    Musbat: ${musbatP}%<br> Manfiy: ${manfiyP}%<br> Nol: ${nolP}%`;
 }
 
 function m6() {
   const input = document.getElementById("inputValue6").value;
-  const array = input.trim().split(" ").map(Number);
-  for (let i = 0; i < array.length; i++) {
-    const el = array[i];
-    if (el % 2 === 0) {
-      document.getElementById(
-        "output6"
-      ).innerHTML += `  index = ${i}  element = [ ${el} ]<br>`;
+  const array = input.trim().split(" ");
+  let longest = array[0];
+  array.forEach((word) => {
+    if (word.length > longest.length) {
+      longest = word;
     }
-  }
+  });
+  document.getElementById("output6").innerHTML = `Uzun ism: ${longest}`;
 }
-
-
 
 function m7() {
   const input = document.getElementById("inputValue7").value;
+  const k = +document.getElementById("inputValue7-7").value;
   const array = input.trim().split(" ").map(Number);
-  array.sort((a, b) => a - b).pop();
-  document.getElementById("output7").innerHTML = `Olib tashlandi: [ ${
-    array
-  } ]`;
+  const sliced = array.splice(0, k);
+  let result = array.concat(sliced).join(", ");
+  document.getElementById(
+    "output7"
+  ).innerHTML = `Olib tashlandi: [ ${result} ]`;
 }
 
 
 
 function m8() {
   const input = document.getElementById("inputValue8").value;
-  const array = input.trim().split(" ").map(Number).reverse().join(", ");
-  document.getElementById(
-    "output8"
-  ).innerHTML = `Teskari tertibda: [ ${array} ]`;
+  const k = +document.getElementById("inputValue8-8").value;
+  const arr = input.trim().split(" ").map(Number);
+  const kk = arr[k];
+  arr[k] = arr[arr.length - 1];
+  arr[arr.length - 1] = kk;
+  console.log(arr);
+  document.getElementById("output8").innerHTML = `Almashtirilgan array: [ ${arr} ]`;
 }
+
+
+
 
 // SOME FUNCTION -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
@@ -185,6 +193,7 @@ document.addEventListener("mousemove", (e) => {
 var swiper = new Swiper(".mySwiper", {
   effect: "coverflow",
   grabCursor: true,
+  loop: true,
   centeredSlides: true,
   slidesPerView: "auto",
   coverflowEffect: {
@@ -197,5 +206,6 @@ var swiper = new Swiper(".mySwiper", {
   pagination: {
     el: ".swiper-pagination",
   },
+  touchEventsTarget: "container",
+  touchRatio: 1,
 });
-
